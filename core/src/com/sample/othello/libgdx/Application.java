@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 
+
 public class Application extends ApplicationAdapter {
 	private SpriteBatch batch;
 	private Texture boardTexture;
@@ -17,6 +18,7 @@ public class Application extends ApplicationAdapter {
 	private Texture whiteTexture1;
 	private Texture whiteTexture2;
 	private OrthographicCamera camera;
+	private StoneAreas stoneAreas;
 	
 	@Override
 	public void create () {
@@ -29,6 +31,7 @@ public class Application extends ApplicationAdapter {
 		blackPushTexture = new Texture("blackStone.png");
 		whiteTexture1 = new Texture("whiteStone.png");
 		whiteTexture2 = new Texture("whiteStone.png");
+		stoneAreas = StoneAreas.initialize();
 	}
 
 	@Override
@@ -42,6 +45,8 @@ public class Application extends ApplicationAdapter {
 		batch.begin();
 		batch.draw(boardTexture, 0, 0);
 
+//		StoneAreas.Area area = stoneAreas.getArea("4d");
+//		System.out.printf("whiteTexture1 x = %d, y = %d%n", area.getStoneX(), area.getStoneY());
 		batch.draw(whiteTexture1, 306, 303);
 		batch.draw(whiteTexture2, 406, 403);
 
@@ -55,7 +60,7 @@ public class Application extends ApplicationAdapter {
 			Vector3 touchPos = new Vector3();
 			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			camera.unproject(touchPos);
-			System.out.printf("touched!! x = %d, y = %d%n",Gdx.input.getX(), Gdx.input.getY());
+			System.out.printf("touched!! x = %d, y = %d, name = %s%n",Gdx.input.getX(), Gdx.input.getY(), stoneAreas.getAreaName(Gdx.input.getX(), Gdx.input.getY()));
 		}
 	}
 	
