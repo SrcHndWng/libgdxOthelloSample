@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class StoneAreas {
+    public static List<String> columnNames = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
     private static StoneAreas stoneAreas = null;
     private List<Area> areas;
 
@@ -42,7 +43,6 @@ public class StoneAreas {
     }
 
     private StoneAreas(){
-        List<String> columnNames = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
         areas = new ArrayList<Area>();
         for(int x = 0; x < 8; x++){
             for(int y = 0; y < 8; y++){
