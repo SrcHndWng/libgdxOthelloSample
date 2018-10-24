@@ -21,7 +21,6 @@ import java.util.Map;
 public class Application extends ApplicationAdapter {
 	private SpriteBatch batch;
 	private Texture boardTexture;
-	private Texture blackPushTexture;
 	private Map<String, Texture> blackStones;
 	private Map<String, Texture> whiteStones;
 	private OrthographicCamera camera;
@@ -37,7 +36,6 @@ public class Application extends ApplicationAdapter {
 		camera.setToOrtho(false, 800, 800);
 		batch = new SpriteBatch();
 		boardTexture = new Texture("board.png");
-		blackPushTexture = new Texture("blackStone.png");
 		stoneAreas = StoneAreas.initialize();
 		blackStones = new Hashtable<>();
 		whiteStones = new Hashtable<>();
@@ -79,7 +77,6 @@ public class Application extends ApplicationAdapter {
 	public void dispose () {
 		batch.dispose();
 		boardTexture.dispose();
-		blackPushTexture.dispose();
 		for(String key: blackStones.keySet()){
 			blackStones.get(key).dispose();
 		}
@@ -90,7 +87,7 @@ public class Application extends ApplicationAdapter {
 	}
 
     private void displayBoard(Board board){
-        for(int x = 0; x < Const.MAX_ROW_COL_NUM; x++) {
+		for(int x = 0; x < Const.MAX_ROW_COL_NUM; x++) {
             ArrayList<Stone> row = board.getStones().get(x);
             for(int y = 0; y < Const.MAX_ROW_COL_NUM; y++){
                 String areaName = String.format("%d%s", x, StoneAreas.columnNames.get(y));
@@ -102,8 +99,8 @@ public class Application extends ApplicationAdapter {
                         batch.draw(blackStones.get(areaName), stoneAreas.getArea(areaName).getStoneX(), stoneAreas.getArea(areaName).getStoneY());
                         break;
                     case WHITE:
-                        whiteStones.put(areaName, new Texture("whiteStone.png"));
-                        batch.draw(whiteStones.get(areaName), stoneAreas.getArea(areaName).getStoneX(), stoneAreas.getArea(areaName).getStoneY());
+						whiteStones.put(areaName, new Texture("whiteStone.png"));
+						batch.draw(whiteStones.get(areaName), stoneAreas.getArea(areaName).getStoneX(), stoneAreas.getArea(areaName).getStoneY());
                         break;
                     default:
                         throw new IllegalStateException("Illegal Stone.");
