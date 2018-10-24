@@ -14,15 +14,13 @@ import com.sample.othello.libgdx.gameLogic.Player;
 import com.sample.othello.libgdx.gameLogic.Stone;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.Map;
 
 
 public class Application extends ApplicationAdapter {
 	private SpriteBatch batch;
 	private Texture boardTexture;
-	private Map<String, Texture> blackStones;
-	private Map<String, Texture> whiteStones;
+	private Texture blackStoneTexture;
+	private Texture whiteStoneTexture;
 	private OrthographicCamera camera;
 	private StoneAreas stoneAreas;
 	private Board board;
@@ -36,9 +34,9 @@ public class Application extends ApplicationAdapter {
 		camera.setToOrtho(false, 800, 800);
 		batch = new SpriteBatch();
 		boardTexture = new Texture("board.png");
+		blackStoneTexture =  new Texture("blackStone.png");
+		whiteStoneTexture = new Texture("whiteStone.png");
 		stoneAreas = StoneAreas.initialize();
-		blackStones = new Hashtable<>();
-		whiteStones = new Hashtable<>();
 		board = Board.initialize();
 		player = new Player();
 		player.setFirst();
@@ -77,12 +75,8 @@ public class Application extends ApplicationAdapter {
 	public void dispose () {
 		batch.dispose();
 		boardTexture.dispose();
-		for(String key: blackStones.keySet()){
-			blackStones.get(key).dispose();
-		}
-		for(String key: whiteStones.keySet()){
-			whiteStones.get(key).dispose();
-		}
+		blackStoneTexture.dispose();
+		whiteStoneTexture.dispose();
 		System.out.println("dispose");
 	}
 
@@ -95,12 +89,10 @@ public class Application extends ApplicationAdapter {
                     case NONE:
                         break;
                     case BLACK:
-                        blackStones.put(areaName, new Texture("blackStone.png"));
-                        batch.draw(blackStones.get(areaName), stoneAreas.getArea(areaName).getStoneX(), stoneAreas.getArea(areaName).getStoneY());
+						batch.draw(blackStoneTexture, stoneAreas.getArea(areaName).getStoneX(), stoneAreas.getArea(areaName).getStoneY());
                         break;
                     case WHITE:
-						whiteStones.put(areaName, new Texture("whiteStone.png"));
-						batch.draw(whiteStones.get(areaName), stoneAreas.getArea(areaName).getStoneX(), stoneAreas.getArea(areaName).getStoneY());
+						batch.draw(whiteStoneTexture, stoneAreas.getArea(areaName).getStoneX(), stoneAreas.getArea(areaName).getStoneY());
                         break;
                     default:
                         throw new IllegalStateException("Illegal Stone.");
