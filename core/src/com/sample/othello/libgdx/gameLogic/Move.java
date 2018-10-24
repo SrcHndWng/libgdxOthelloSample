@@ -1,4 +1,4 @@
-package com.sample.othello.libgdx;
+package com.sample.othello.libgdx.gameLogic;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

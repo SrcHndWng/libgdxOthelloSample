@@ -1,11 +1,9 @@
-package com.sample.othello.libgdx;
+package com.sample.othello.libgdx.gameLogic;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import jdk.nashorn.internal.ir.Terminal;
 
 public class BoardTests {
     Board board;

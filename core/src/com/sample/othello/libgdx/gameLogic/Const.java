@@ -1,4 +1,4 @@
-package com.sample.othello.libgdx;
+package com.sample.othello.libgdx.gameLogic;
 
 public class Const {
     public static class Key{
