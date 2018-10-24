@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.sample.othello.libgdx.gameLogic.Board;
 import com.sample.othello.libgdx.gameLogic.Const;
+import com.sample.othello.libgdx.gameLogic.Move;
+import com.sample.othello.libgdx.gameLogic.Player;
 import com.sample.othello.libgdx.gameLogic.Stone;
 
 import java.util.ArrayList;
@@ -25,6 +27,7 @@ public class Application extends ApplicationAdapter {
 	private OrthographicCamera camera;
 	private StoneAreas stoneAreas;
 	private Board board;
+	private Player player;
 	private int touchedX = 0;
 	private int touchedY = 0;
 	
@@ -38,12 +41,13 @@ public class Application extends ApplicationAdapter {
 		stoneAreas = StoneAreas.initialize();
 		blackStones = new Hashtable<>();
 		whiteStones = new Hashtable<>();
+		board = Board.initialize();
+		player = new Player();
+		player.setFirst();
 	}
 
 	@Override
 	public void render () {
-		board = Board.initialize();
-
 		Gdx.gl.glClearColor(0, 0.5019f, 0, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -62,6 +66,9 @@ public class Application extends ApplicationAdapter {
 			camera.unproject(touchPos);
 			if(isFirstTouchEvent()){
 				System.out.printf("touched!! x = %d, y = %d, name = %s%n",Gdx.input.getX(), Gdx.input.getY(), stoneAreas.getAreaName(Gdx.input.getX(), Gdx.input.getY()));
+                Move move = new Move(stoneAreas.getAreaName(Gdx.input.getX(), Gdx.input.getY()));
+                Boolean isSwapped = board.input(player, move);
+                player.change();
 				touchedX = Gdx.input.getX();
 				touchedY = Gdx.input.getY();
 			}
