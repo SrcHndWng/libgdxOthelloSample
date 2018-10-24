@@ -2,15 +2,20 @@ package com.sample.othello.libgdx;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
-import java.awt.geom.Area;
-
 public class StoneAreasTest {
+    StoneAreas stoneAreas;
+
+    @Before
+    public void before(){
+        stoneAreas = StoneAreas.initialize();
+    }
+
     @Test
     public void getAreaName() {
         String result;
-        StoneAreas stoneAreas = StoneAreas.initialize();
 
         result = stoneAreas.getAreaName(54, 54);
         System.out.printf("result = %s%n", result);
@@ -31,15 +36,18 @@ public class StoneAreasTest {
 
     @Test
     public void getName(){
-        StoneAreas stoneAreas = StoneAreas.initialize();
         StoneAreas.Area area;
 
         area = stoneAreas.getArea("0a");
         assertEquals(6,  area.getStoneX());
-        assertEquals(3, area.getStoneY());
+        assertEquals(703, area.getStoneY());
+
+        area = stoneAreas.getArea("4d");
+        assertEquals(306,  area.getStoneX());
+        assertEquals(303, area.getStoneY());
 
         area = stoneAreas.getArea("7h");
         assertEquals(706,  area.getStoneX());
-        assertEquals(703, area.getStoneY());
+        assertEquals(3, area.getStoneY());
     }
 }

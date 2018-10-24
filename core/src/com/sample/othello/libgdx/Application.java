@@ -45,13 +45,11 @@ public class Application extends ApplicationAdapter {
 		batch.begin();
 		batch.draw(boardTexture, 0, 0);
 
-//		StoneAreas.Area area = stoneAreas.getArea("4d");
-//		System.out.printf("whiteTexture1 x = %d, y = %d%n", area.getStoneX(), area.getStoneY());
-		batch.draw(whiteTexture1, 306, 303);
-		batch.draw(whiteTexture2, 406, 403);
+		batch.draw(whiteTexture1, stoneAreas.getArea("4d").getStoneX(), stoneAreas.getArea("4d").getStoneY());
+		batch.draw(whiteTexture2, stoneAreas.getArea("3e").getStoneX(), stoneAreas.getArea("3e").getStoneY());
 
-		batch.draw(blackTexture1, 306, 403);
-		batch.draw(blackTexture2, 406, 303);
+		batch.draw(blackTexture1, stoneAreas.getArea("3d").getStoneX(), stoneAreas.getArea("3d").getStoneY());
+		batch.draw(blackTexture2, stoneAreas.getArea("4e").getStoneX(), stoneAreas.getArea("4e").getStoneY());
 
 		batch.end();
 

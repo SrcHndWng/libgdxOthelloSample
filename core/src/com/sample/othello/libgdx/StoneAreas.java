@@ -9,34 +9,36 @@ public class StoneAreas {
     private List<Area> areas;
 
     public class Area {
-        private int fromX;
-        private int fromY;
-        private int toX;
-        private int toY;
+        private int touchFromX;
+        private int touchFromY;
+        private int touchToX;
+        private int touchToY;
         private int stoneX;
         private int stoneY;
         private String name;
 
-        public Area(int fromX, int fromY, int toX, int toY, String name){
-            this.fromX = fromX;
-            this.fromY = fromY;
-            this.toX = toX;
-            this.toY = toY;
-            this.stoneX = fromX + 6;
-            this.stoneY = fromY + 3;
+        public Area(int touchFromX, int touchFromY, int touchToX, int touchToY, int stoneX, int stoneY, String name){
+            this.touchFromX = touchFromX;
+            this.touchFromY = touchFromY;
+            this.touchToX = touchToX;
+            this.touchToY = touchToY;
+            this.stoneX = stoneX;
+            this.stoneY = stoneY;
             this.name = name;
         }
 
-        public String getAreaName(int x, int y){
-            if((fromX <= x) && (x < toX) && (fromY <= y) && (y < toY)){
-                return name;
-            }
-            return "";
-        }
-
-        public String getName(){ return name; }
+        public int getTouchFromX() { return touchFromX; }
+        public int getTouchFromY() { return touchFromY; }
+        public int getTouchToX() { return touchToX; }
+        public int getTouchToY() { return touchToY; }
         public int getStoneX(){ return  stoneX; }
         public int getStoneY() { return stoneY; }
+        public String getName(){ return name; }
+        public String toString(){
+            return String.format(
+                    "touchFromX = %d, touchFromY = %d, touchToX = %d, touchToY = %d, stoneX = %d, stoneY = %d, name=%s",
+                    touchFromX, touchFromY, touchToX, touchToY, stoneX, stoneY, name);
+        }
     }
 
     private StoneAreas(){
@@ -48,9 +50,12 @@ public class StoneAreas {
                 int fromY = y * 100;
                 int toX = fromX + 100 - 2;
                 int toY = fromY + 100 - 2;
+                int stoneX = fromX + 6;
+                int stoneY = 700 - fromY + 3;
                 String name = String.format("%d%s", y, columnNames.get(x));
-                System.out.printf("area fromX = %d, fromY = %d, toX = %d, toY = %d, name=%s%n", fromX, fromY, toX, toY, name);
-                areas.add(new Area(fromX, fromY, toX, toY, name));
+                Area area = new Area(fromX, fromY, toX, toY, stoneX, stoneY, name);
+                System.out.println(area.toString());
+                areas.add(area);
             }
         }
     }
@@ -64,12 +69,11 @@ public class StoneAreas {
 
     public String getAreaName(int x, int y){
         for(Area area: areas){
-            String name = area.getAreaName(x, y);
-            if(!name.isEmpty()){
-                return name;
+            if((area.getTouchFromX() <= x) && (x < area.getTouchToX()) && (area.getTouchFromY() <= y) && (y < area.getTouchToY())){
+                return area.getName();
             }
         }
-        return "";
+        throw new IllegalArgumentException();
     }
 
     public Area getArea(String name){
@@ -78,6 +82,6 @@ public class StoneAreas {
                 return area;
             }
         }
-        return null;
+        throw new IllegalArgumentException();
     }
 }
