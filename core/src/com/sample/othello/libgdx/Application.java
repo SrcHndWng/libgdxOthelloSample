@@ -32,7 +32,7 @@ public class Application extends ApplicationAdapter {
 	@Override
 	public void create () {
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 800, 800);
+		camera.setToOrtho(false, Const.Desktop.width, Const.Desktop.height);
 		batch = new SpriteBatch();
 		boardTexture = new Texture("board.png");
 		blackStoneTexture =  new Texture("blackStone.png");
