@@ -2,6 +2,7 @@ package com.sample.othello.libgdx;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -26,6 +27,7 @@ public class Application extends ApplicationAdapter {
 	private Player player;
 	private int touchedX = 0;
 	private int touchedY = 0;
+	private int pushSpace = 0;
 	
 	@Override
 	public void create () {
@@ -57,6 +59,7 @@ public class Application extends ApplicationAdapter {
 
 		// process user input
 		if(Gdx.input.isTouched()) {
+			pushSpace = 0;
 			Vector3 touchPos = new Vector3();
 			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			camera.unproject(touchPos);
@@ -73,6 +76,13 @@ public class Application extends ApplicationAdapter {
 					setMessage(String.format("Your input = %s. You can't change stones.", move.getKey()));
 				}
 			}
+		}
+		if(Gdx.input.isKeyPressed(Keys.SPACE)){
+			if(pushSpace == 0){
+				player.change();
+				setMessage(String.format("You're %s.", player.getName()));
+			}
+			pushSpace++;
 		}
 	}
 	
