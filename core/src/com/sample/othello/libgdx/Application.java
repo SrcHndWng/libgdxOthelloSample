@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.sample.othello.libgdx.gameLogic.Board;
 import com.sample.othello.libgdx.gameLogic.Const;
 import com.sample.othello.libgdx.gameLogic.Move;
@@ -16,9 +15,7 @@ import com.sample.othello.libgdx.gameLogic.Stone;
 
 import java.util.ArrayList;
 
-
 public class Application extends ApplicationAdapter {
-	private Stage stage;
 	private SpriteBatch batch;
 	private Texture boardTexture;
 	private Texture blackStoneTexture;
@@ -67,10 +64,14 @@ public class Application extends ApplicationAdapter {
 				System.out.printf("touched!! x = %d, y = %d, name = %s%n",Gdx.input.getX(), Gdx.input.getY(), stoneAreas.getAreaName(Gdx.input.getX(), Gdx.input.getY()));
                 Move move = new Move(stoneAreas.getAreaName(Gdx.input.getX(), Gdx.input.getY()));
                 Boolean isSwapped = board.input(player, move);
-                player.change();
-				setMessage(String.format("You're %s.", player.getName()));
-				touchedX = Gdx.input.getX();
-				touchedY = Gdx.input.getY();
+				if(isSwapped) {
+					player.change();
+					setMessage(String.format("You're %s.", player.getName()));
+					touchedX = Gdx.input.getX();
+					touchedY = Gdx.input.getY();
+				}else{
+					setMessage(String.format("Your input = %s. You can't change stones.", move.getKey()));
+				}
 			}
 		}
 	}
