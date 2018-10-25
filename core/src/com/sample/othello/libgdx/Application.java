@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.sample.othello.libgdx.gameLogic.Board;
 import com.sample.othello.libgdx.gameLogic.Const;
 import com.sample.othello.libgdx.gameLogic.Move;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 
 
 public class Application extends ApplicationAdapter {
+	private Stage stage;
 	private SpriteBatch batch;
 	private Texture boardTexture;
 	private Texture blackStoneTexture;
@@ -40,6 +42,7 @@ public class Application extends ApplicationAdapter {
 		board = Board.initialize();
 		player = new Player();
 		player.setFirst();
+		setMessage(String.format("You're %s, please start!", player.getName()));
 	}
 
 	@Override
@@ -65,6 +68,7 @@ public class Application extends ApplicationAdapter {
                 Move move = new Move(stoneAreas.getAreaName(Gdx.input.getX(), Gdx.input.getY()));
                 Boolean isSwapped = board.input(player, move);
                 player.change();
+				setMessage(String.format("You're %s.", player.getName()));
 				touchedX = Gdx.input.getX();
 				touchedY = Gdx.input.getY();
 			}
@@ -78,6 +82,10 @@ public class Application extends ApplicationAdapter {
 		blackStoneTexture.dispose();
 		whiteStoneTexture.dispose();
 		System.out.println("dispose");
+	}
+
+	private void setMessage(String message){
+		Gdx.graphics.setTitle(String.format("Othello Application. %s.", message));
 	}
 
     private void displayBoard(Board board){
